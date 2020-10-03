@@ -82,9 +82,8 @@ App = {
     }).then(function(hasVoted) {
       // Check if the user has already voted
       if(hasVoted) {
-        $('form').hide();
+        $('#voting').hide();
       }
-      loader.hide();
       content.show();
     }).catch(function(error) {
       console.warn(error);
@@ -95,9 +94,9 @@ App = {
       const candidateId = $('#candidatesSelect').val();
       App.contracts.Election.deployed().then(function(instance) {
         return instance.vote(candidateId, { from: App.account });
-      }).then(function(result) {
-        $("#content").hide();
-        $("#loader").show();
+      }).then(function() {
+        // Refresh after payment
+        location.reload();
       }).catch(function(err) {
         console.error(err);
     });
@@ -106,12 +105,15 @@ App = {
   createCandidate: function() {
       const inputCandidate = $('#inputCandidate').val();
       App.contracts.Election.deployed().then(function(instance) {
-        console.log("fired");
-        instance.addCandidate(inputCandidate);
-      })
+        return instance.addCandidate(inputCandidate);
+      }).then(function() {
+        // Refresh after payment
+        location.reload();
+      }).catch(function(err) {
+        console.error(err);
+      });
   }
 };
-
 
 $(function() {
   $(window).load(function() {
