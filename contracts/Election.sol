@@ -2,36 +2,38 @@
 pragma solidity >=0.7;
 
 contract Election {
-    // Model a candidate
+    // Candidate struct represents a candidiate.
     struct Candidate {
         uint id;
         string name;
         uint voteCount;
     }
 
+    // votedEvent is an event that gets fired whenever a user votes
     event votedEvent (
         uint indexed _candidateId
     );
 
-    // Read/Write candidates
+    // A map of all the candidiates in the current election.
     mapping(uint => Candidate) public candidates;
 
-    // Store accounts that have voted
+    // A map of all the voters for the election.
     mapping(address => bool) public voters;
 
-    // Candidate Counts
+    // A count of the candidates in the election.
     uint public candidatesCount;
 
-    // Read/Write candidate
+    // A candidate.
     string public candidate;
 
-    // Constructor
+    // Create 2 candidiates when the contract is first initialized.
     constructor() {
-        addCandidate("Candidate 1");
-        addCandidate("Candidate 2");
+        addCandidate("Omar Sagoo");
+        addCandidate("Audi Blades");
     }
 
-    function addCandidate(string memory _name) private {
+    // addCandidate will add a candidate to the current election
+    function addCandidate(string memory _name) public {
         candidatesCount++;
         candidates[candidatesCount] = Candidate(candidatesCount, _name, 0);
     }
@@ -48,7 +50,7 @@ contract Election {
         voters[msg.sender] = true;
 
         // update candidate vote Count
-        candidates[_candidateId].voteCount ++;
+        candidates[_candidateId].voteCount++;
 
         // trigger voted event
         emit votedEvent(_candidateId);
