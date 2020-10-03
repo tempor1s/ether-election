@@ -15,7 +15,8 @@ App = {
       web3 = new Web3(web3.currentProvider);
     } else {
       ethereum.enable()
-      App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
+      // App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
+      App.web3Provider = new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/f173b90385c04a5b9eae3237216d15b3');
       web3 = new Web3(App.web3Provider);
     }
     return App.initContract();
