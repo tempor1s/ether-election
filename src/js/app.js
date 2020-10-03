@@ -21,6 +21,7 @@ App = {
     return App.initContract();
   },
 
+  // Init the contract.
   initContract: function() {
     $.getJSON("Election.json", function(election) {
       // New truffle contract 
@@ -33,6 +34,7 @@ App = {
     });
   },
 
+  // Handles displaying candidate names and votes.
   render: function() {
     let electionInstance;
     const loader = $("#loader");
@@ -90,6 +92,7 @@ App = {
     });
   },
 
+  // Allow a user to vote for a candidate.
   castVote: function() {
       const candidateId = $('#candidatesSelect').val();
       App.contracts.Election.deployed().then(function(instance) {
@@ -102,6 +105,8 @@ App = {
     });
   },
 
+
+  // Allow a user to elect a candidate.
   createCandidate: function() {
       const inputCandidate = $('#inputCandidate').val();
       App.contracts.Election.deployed().then(function(instance) {
