@@ -100,8 +100,16 @@ App = {
         $("#loader").show();
       }).catch(function(err) {
         console.error(err);
-      });
-    }
+    });
+  },
+
+  createCandidate: function() {
+      const inputCandidate = $('#inputCandidate').val();
+      App.contracts.Election.deployed().then(function(instance) {
+        console.log("fired");
+        instance.addCandidate(inputCandidate);
+      })
+  }
 };
 
 
