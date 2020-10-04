@@ -15,8 +15,8 @@ App = {
       web3 = new Web3(web3.currentProvider);
     } else {
       ethereum.enable()
-      // App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
-      App.web3Provider = new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/f173b90385c04a5b9eae3237216d15b3');
+      App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
+      // App.web3Provider = new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/f173b90385c04a5b9eae3237216d15b3');
       web3 = new Web3(App.web3Provider);
     }
     return App.initContract();
@@ -24,19 +24,24 @@ App = {
 
   // Init the contract.
   initContract: function() {
-    const abi = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"_candidateId","type":"uint256"}],"name":"votedEvent","type":"event"},{"inputs":[{"internalType":"string","name":"_name","type":"string"}],"name":"addCandidate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"candidate","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"candidates","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"name","type":"string"},{"internalType":"uint256","name":"voteCount","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"candidatesCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_candidateId","type":"uint256"}],"name":"vote","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"voters","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"}];
-    App.contracts.Election = TruffleContract(abi);
-    App.contracts.Election.setProvider(App.web3Provider);
-    return App.render();
-    // $.getJSON("Election.json", function(election) {
-    //   // New truffle contract 
-    //   // App.contracts.Election = TruffleContract(election);
-    //   console.log(App.contracts.Election)
+    // const abi = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"_candidateId","type":"uint256"}],"name":"votedEvent","type":"event"},{"inputs":[{"internalType":"string","name":"_name","type":"string"}],"name":"addCandidate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"candidate","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"candidates","outputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"name","type":"string"},{"internalType":"uint256","name":"voteCount","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"candidatesCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_candidateId","type":"uint256"}],"name":"vote","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"voters","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"}];
 
-    //   // Connect provider to contract
-
-    //   return App.render();
+    // App.contracts.Election = TruffleContract({
+    //   abi: abi,
+    //   address: "0x231D819e710169fCE1E3382d593e3BfBd82f74C2",
     // });
+
+    // App.contracts.Election.setProvider(App.web3Provider);
+    // return App.render();
+    $.getJSON("Election.json", function(election) {
+      // New truffle contract 
+      App.contracts.Election = TruffleContract(election);
+
+      // Connect provider to contract
+      App.contracts.Election.setProvider(App.web3Provider);
+
+      return App.render();
+    });
   },
 
   // Handles displaying candidate names and votes.
